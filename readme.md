@@ -26,13 +26,17 @@
 2. Text Clustering: Cluster songs based on their lyrical content.
 3. Sentiment Over Time: Analyze how the sentiment of the lyrics changes across different albums or years.
 
-# Notes 13/6/2023
+# Notes 
+## 13/6/2023
 
 Need to rethink/reevaluate the text preprocessing:
-1) stop words 
-2) abbreviations like i'll --> ill, you've -->youve
-3) exclamations like woohoo? or nana?
-4) 
+1) stop words X words_to_exclude, additional_stopwords
+2) abbreviations like i'll --> ill, you've -->youve X
+3) exclamations like woohoo? or nana? X words_to_exclude, additional_stopwords
+
+## 21/6/2023
+4) What to do with ngrams? Evolution? 
+5) Should I use tokens insted of cleaned lyrics?
 
 
 
