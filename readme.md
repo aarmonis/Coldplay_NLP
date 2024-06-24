@@ -19,7 +19,7 @@
 # Step 4:Text Analysis
 1. Sentiment Analysis: Analyze the sentiment of each song's lyrics (e.g., positive, negative, neutral).
 2. N-gram Analysis: Analyze the most common bi-grams or tri-grams (pairs or triplets of words). --> PHRASES
-3. TF-IDF Analysis: Compute the Term Frequency-Inverse Document Frequency to identify important words.
+3. TF-IDF Analysis: Compute the Term Frequency-Inverse Document Frequency to identify important words (read tf_idf.md file)
 
 # Step 5: Advanced Analysis 
 1. Topic Modeling: Use techniques like LDA (Latent Dirichlet Allocation) to identify topics within the lyrics. --> MEANINGS
@@ -38,5 +38,9 @@ Need to rethink/reevaluate the text preprocessing:
 4) What to do with ngrams? Evolution? 
 5) Should I use tokens insted of cleaned lyrics?
 
+## 24/06/2023
+6) TF-IDF holds major potential in identifying most important words. 
+7) analysis per song (document)? or per album (set of documents)?
+8) Visualize the importance of some words using time graphs (tf_idf score vs song_id).
 
 
