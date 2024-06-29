@@ -25,6 +25,10 @@
 1. Topic Modeling: Use techniques like LDA (Latent Dirichlet Allocation) to identify topics within the lyrics. --> MEANINGS
 2. Text Clustering: Cluster songs based on their lyrical content.
 3. Sentiment Over Time: Analyze how the sentiment of the lyrics changes across different albums or years.
+4. Linguistic complexitiy. Readability library.
+6. Use Spotify Database or api
+https://developer.spotify.com/documentation/web-api/reference/get-audio-features
+
 
 # Notes 
 ## 13/6/2024
@@ -52,3 +56,6 @@ Need to rethink/reevaluate the text preprocessing:
 
 https://arxiv.org/pdf/1703.00607v2 useful paper?
 
+## 29/06/2024
+
+13. Performed LBSA and SA using pre-trained distilBERT. Notebook analysis on sentiment.ipynb
