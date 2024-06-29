@@ -27,20 +27,28 @@
 3. Sentiment Over Time: Analyze how the sentiment of the lyrics changes across different albums or years.
 
 # Notes 
-## 13/6/2023
+## 13/6/2024
 
 Need to rethink/reevaluate the text preprocessing:
 1) stop words X words_to_exclude, additional_stopwords
 2) abbreviations like i'll --> ill, you've -->youve X
 3) exclamations like woohoo? or nana? X words_to_exclude, additional_stopwords
 
-## 21/6/2023
+## 21/6/2024
 4) What to do with ngrams? Evolution? 
 5) Should I use tokens insted of cleaned lyrics?
 
-## 24/06/2023
+## 24/06/2024
 6) TF-IDF holds major potential in identifying most important words. 
 7) analysis per song (document)? or per album (set of documents)?
 8) Visualize the importance of some words using time graphs (tf_idf score vs song_id).
 
+## 28/06/2024
+
+9. Text Classification vs Sentiment Analysis are different approaches.
+10. Design different preprocessing and normalization for each.
+11. Figure out normalization methods and what to look for in each case.
+12. Can I use text analysis to figure out important words and then use aspect SA?
+
+https://arxiv.org/pdf/1703.00607v2 useful paper?
 
