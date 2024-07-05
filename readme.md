@@ -59,3 +59,9 @@ https://arxiv.org/pdf/1703.00607v2 useful paper?
 ## 29/06/2024
 
 13. Performed LBSA and SA using pre-trained distilBERT. Notebook analysis on sentiment.ipynb
+
+## 07/05/2024 toDo:
+
+14. Test 10 models and create classification metrics.
+15. Determine thresholds.
+16. Set up evaluation metrics.
