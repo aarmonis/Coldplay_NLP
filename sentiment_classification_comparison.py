@@ -2,6 +2,7 @@ import pandas as pd
 from transformers import pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Load the dataset
 df = pd.read_csv('coldplay_lyrics.csv')
@@ -29,26 +30,52 @@ def get_vader_sentiment(text):
 
 # Function to get Hugging Face transformer sentiment
 def get_transformer_sentiment(model_pipeline, text):
-    result = model_pipeline(text)[0]
-    return result['label'], result['score']
+    try:
+        result = model_pipeline(text)[0]
+        return result['label'], result['score']
+    except Exception as e:
+        print(f"Error in sentiment analysis: {e}")
+        return "ERROR", 0.0
+
+# Function to normalize sentiment scores
+def normalize_sentiment_score(score, model_name):
+    if 'roberta' in model_name.lower():
+        return (score - 1) / 4  # RoBERTa models typically output 0-4
+    elif 'albert' in model_name.lower() or 'electra' in model_name.lower() or 'bert' in model_name.lower():
+        return score  # These models typically output 0-1
+    elif 'xlnet' in model_name.lower():
+        return (score * 2) - 1  # XLNet typically outputs 0-1, convert to -1 to 1
+    else:
+        return score  # Default case
 
 # Apply each model to the dataset and store results
 for model_name, model_pipeline in models.items():
     df[f'{model_name}_sentiment'], df[f'{model_name}_score'] = zip(*df['lyrics_clean'].apply(lambda x: get_transformer_sentiment(model_pipeline, x)))
+    df[f'{model_name}_normalized_score'] = df[f'{model_name}_score'].apply(lambda x: normalize_sentiment_score(x, model_name))
 
 # Apply VADER to the dataset
 df['vader_sentiment'] = df['lyrics_clean'].apply(get_vader_sentiment)
 
 # Analyze and compare the results
-plt.figure(figsize=(14, 7))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 14))
+
+# Plot for Hugging Face models
 for model_name in models.keys():
-    plt.hist(df[f'{model_name}_score'], bins=20, alpha=0.5, label=model_name)
-plt.hist(df['vader_sentiment'], bins=20, alpha=0.5, label='vader')
-plt.legend(loc='upper right')
-plt.title('Sentiment Score Distributions')
-plt.xlabel('Sentiment Score')
-plt.ylabel('Frequency')
+    ax1.hist(df[f'{model_name}_normalized_score'], bins=20, alpha=0.5, label=model_name)
+ax1.legend(loc='upper right')
+ax1.set_title('Hugging Face Models Sentiment Score Distributions')
+ax1.set_xlabel('Normalized Sentiment Score')
+ax1.set_ylabel('Frequency')
+
+# Plot for VADER
+ax2.hist(df['vader_sentiment'], bins=20, alpha=0.5, label='VADER')
+ax2.legend(loc='upper right')
+ax2.set_title('VADER Sentiment Score Distribution')
+ax2.set_xlabel('Sentiment Score')
+ax2.set_ylabel('Frequency')
+
+plt.tight_layout()
 plt.show()
 
 # Optional: Export the results to a CSV for further analysis
-df.to_csv('huggingface_sentiment_analysis_results.csv', index=False)
+df.to_csv('sentiment_analysis_results.csv', index=False)
