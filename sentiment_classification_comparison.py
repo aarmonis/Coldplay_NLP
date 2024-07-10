@@ -3,9 +3,19 @@ from transformers import pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
 import numpy as np
+from tqdm import tqdm
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Load the dataset
-df = pd.read_excel('Coldplay Research Project_Data.xlsx')
+try:
+    df = pd.read_excel('Coldplay Research Project_Data.xlsx')
+    logging.info(f"Dataset loaded successfully. Shape: {df.shape}")
+except Exception as e:
+    logging.error(f"Error loading dataset: {e}")
+    raise
 
 # Preprocess the text data
 df['lyrics_clean'] = df['lyrics'].str.lower().str.replace(r'[^\w\s]', '')
@@ -34,8 +44,12 @@ def get_transformer_sentiment(model_pipeline, text):
         result = model_pipeline(text)[0]
         return result['label'], result['score']
     except Exception as e:
-        print(f"Error in sentiment analysis: {e}")
+        logging.error(f"Error in sentiment analysis: {e}")
         return "ERROR", 0.0
+
+# Function to calculate average sentiment score
+def calculate_average_sentiment(df, model_name):
+    return df[f'{model_name}_normalized_score'].mean()
 
 # Function to normalize sentiment scores
 def normalize_sentiment_score(score, model_name):
@@ -49,12 +63,16 @@ def normalize_sentiment_score(score, model_name):
         return score  # Default case
 
 # Apply each model to the dataset and store results
-for model_name, model_pipeline in models.items():
+for model_name, model_pipeline in tqdm(models.items(), desc="Analyzing sentiments"):
     df[f'{model_name}_sentiment'], df[f'{model_name}_score'] = zip(*df['lyrics_clean'].apply(lambda x: get_transformer_sentiment(model_pipeline, x)))
     df[f'{model_name}_normalized_score'] = df[f'{model_name}_score'].apply(lambda x: normalize_sentiment_score(x, model_name))
+    avg_sentiment = calculate_average_sentiment(df, model_name)
+    logging.info(f"Average sentiment for {model_name}: {avg_sentiment:.4f}")
 
 # Apply VADER to the dataset
 df['vader_sentiment'] = df['lyrics_clean'].apply(get_vader_sentiment)
+vader_avg = df['vader_sentiment'].mean()
+logging.info(f"Average VADER sentiment: {vader_avg:.4f}")
 
 # Analyze and compare the results
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 14))
