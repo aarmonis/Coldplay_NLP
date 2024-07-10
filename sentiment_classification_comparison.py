@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Load the dataset
-df = pd.read_csv('coldplay_lyrics.csv')
+df = pd.read_excel('Coldplay Research Project_Data.xlsx')
 
 # Preprocess the text data
 df['lyrics_clean'] = df['lyrics'].str.lower().str.replace(r'[^\w\s]', '')
