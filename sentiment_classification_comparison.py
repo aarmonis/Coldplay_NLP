@@ -8,7 +8,7 @@ import numpy as np
 df = pd.read_csv('coldplay_lyrics.csv')
 
 # Preprocess the text data
-df['lyrics_clean'] = df['lyrics'].str.lower().str.replace('[^\w\s]', '')
+df['lyrics_clean'] = df['lyrics'].str.lower().str.replace(r'[^\w\s]', '')
 
 # Initialize sentiment analysis pipelines for different models
 models = {
