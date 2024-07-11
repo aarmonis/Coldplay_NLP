@@ -109,7 +109,7 @@ print("Column names in the DataFrame:", df.columns.tolist())
 results_df = pd.DataFrame({
     'Track Name': df['Track Name'],
     'Album Name': df['Album Name'],
-    'Year': df['Year']
+    'Album Release Date': df['Album Release Date']
 })
 
 # Add sentiment scores for each model
@@ -128,20 +128,20 @@ results_df = results_df.sort_values('Average_sentiment', ascending=False)
 
 # Display the top 10 most positive and most negative songs
 print("\nTop 10 Most Positive Songs:")
-print(results_df.head(10)[['Track Name', 'Album Name', 'Year', 'Average_sentiment']])
+print(results_df.head(10)[['Track Name', 'Album Name', 'Album Release Date', 'Average_sentiment']])
 
 print("\nTop 10 Most Negative Songs:")
-print(results_df.tail(10)[['Track Name', 'Album Name', 'Year', 'Average_sentiment']])
+print(results_df.tail(10)[['Track Name', 'Album Name', 'Album Release Date', 'Average_sentiment']])
 
 # Calculate average sentiment by album
 album_sentiment = results_df.groupby('Album Name')['Average_sentiment'].mean().sort_values(ascending=False)
 print("\nAverage Sentiment by Album:")
 print(album_sentiment)
 
-# Calculate average sentiment by year
-year_sentiment = results_df.groupby('Year')['Average_sentiment'].mean().sort_values(ascending=False)
-print("\nAverage Sentiment by Year:")
-print(year_sentiment)
+# Calculate average sentiment by release date
+release_date_sentiment = results_df.groupby('Album Release Date')['Average_sentiment'].mean().sort_values(ascending=False)
+print("\nAverage Sentiment by Album Release Date:")
+print(release_date_sentiment)
 
 # Export the results to a CSV for further analysis
 results_df.to_csv('sentiment_analysis_results.csv', index=False)
