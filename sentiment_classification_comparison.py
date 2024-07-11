@@ -2,6 +2,7 @@ import pandas as pd
 from transformers import pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
+import seaborn as sns
 import numpy as np
 from tqdm import tqdm
 import logging
@@ -102,6 +103,62 @@ plt.show()
 
 # Optional: Export the results to a CSV for further analysis
 df.to_csv('sentiment_analysis_results.csv', index=False)
+
+# Calculate descriptive statistics
+def calculate_descriptive_stats(df, model_names):
+    stats = {}
+    for model in model_names + ['vader']:
+        column = f'{model}_normalized_score' if model != 'vader' else 'vader_sentiment'
+        stats[model] = {
+            'mean': df[column].mean(),
+            'median': df[column].median(),
+            'std': df[column].std()
+        }
+    return stats
+
+descriptive_stats = calculate_descriptive_stats(df, list(models.keys()))
+
+# Print descriptive statistics
+for model, stats in descriptive_stats.items():
+    print(f"\nDescriptive Statistics for {model}:")
+    print(f"Mean: {stats['mean']:.4f}")
+    print(f"Median: {stats['median']:.4f}")
+    print(f"Standard Deviation: {stats['std']:.4f}")
+
+# Visualizations
+plt.figure(figsize=(20, 15))
+
+# Histograms
+plt.subplot(3, 1, 1)
+for model in models.keys():
+    plt.hist(df[f'{model}_normalized_score'], bins=20, alpha=0.5, label=model)
+plt.hist(df['vader_sentiment'], bins=20, alpha=0.5, label='VADER')
+plt.title('Sentiment Score Distributions (Histogram)')
+plt.xlabel('Normalized Sentiment Score')
+plt.ylabel('Frequency')
+plt.legend(loc='upper right')
+
+# Box Plots
+plt.subplot(3, 1, 2)
+data = [df[f'{model}_normalized_score'] for model in models.keys()] + [df['vader_sentiment']]
+labels = list(models.keys()) + ['VADER']
+plt.boxplot(data, labels=labels)
+plt.title('Sentiment Score Distributions (Box Plot)')
+plt.ylabel('Normalized Sentiment Score')
+plt.xticks(rotation=45)
+
+# Density Plots
+plt.subplot(3, 1, 3)
+for model in models.keys():
+    sns.kdeplot(df[f'{model}_normalized_score'], shade=True, label=model)
+sns.kdeplot(df['vader_sentiment'], shade=True, label='VADER')
+plt.title('Sentiment Score Distributions (Density Plot)')
+plt.xlabel('Normalized Sentiment Score')
+plt.ylabel('Density')
+plt.legend(loc='upper right')
+
+plt.tight_layout()
+plt.show()
 import pandas as pd
 from transformers import pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
