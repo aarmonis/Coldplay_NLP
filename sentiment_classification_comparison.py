@@ -1,5 +1,5 @@
 import pandas as pd
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -29,8 +29,9 @@ logging.info("Step 2: Model Initialization")
 device = 0 if torch.cuda.is_available() else -1
 logging.info(f"Using device: {'GPU' if device == 0 else 'CPU'}")
 
-# Initialize sentiment analysis pipelines for different models
+# Initialize sentiment analysis pipelines and tokenizers for different models
 models = {}
+tokenizers = {}
 model_configs = [
     ('siebert/sentiment-roberta-large-english', 'sentiment-analysis'),
     ('cardiffnlp/twitter-roberta-base-sentiment', 'sentiment-analysis'),
@@ -44,9 +45,11 @@ model_configs = [
 for model_name, task in model_configs:
     try:
         models[model_name] = pipeline(task, model=model_name, device=device)
+        tokenizers[model_name] = AutoTokenizer.from_pretrained(model_name)
     except torch.cuda.OutOfMemoryError:
         logging.warning(f"GPU out of memory for {model_name}. Falling back to CPU.")
         models[model_name] = pipeline(task, model=model_name, device=-1)
+        tokenizers[model_name] = AutoTokenizer.from_pretrained(model_name)
 
 # Initialize VADER sentiment analyzer
 vader = SentimentIntensityAnalyzer()
@@ -58,9 +61,10 @@ def get_vader_sentiment(text):
     return vader.polarity_scores(text)['compound']
 
 # Function to get Hugging Face transformer sentiment
-def get_transformer_sentiment(model_pipeline, text):
+def get_transformer_sentiment(model_pipeline, tokenizer, text):
     try:
-        result = model_pipeline(text)[0]
+        inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+        result = model_pipeline(inputs)[0]
         return result['label'], result['score']
     except Exception as e:
         logging.error(f"Error in sentiment analysis: {e}")
@@ -85,7 +89,7 @@ def normalize_sentiment_score(score, model_name):
 
 # Apply each model to the dataset and store results
 for model_name, model_pipeline in tqdm(models.items(), desc="Analyzing sentiments"):
-    df[f'{model_name}_sentiment'], df[f'{model_name}_score'] = zip(*df['lyrics_clean'].apply(lambda x: get_transformer_sentiment(model_pipeline, x)))
+    df[f'{model_name}_sentiment'], df[f'{model_name}_score'] = zip(*df['lyrics_clean'].apply(lambda x: get_transformer_sentiment(model_pipeline, tokenizers[model_name], x)))
     df[f'{model_name}_normalized_score'] = df[f'{model_name}_score'].apply(lambda x: normalize_sentiment_score(x, model_name))
     avg_sentiment = calculate_average_sentiment(df, model_name)
     logging.info(f"Average sentiment for {model_name}: {avg_sentiment:.4f}")
