@@ -18,7 +18,7 @@ except Exception as e:
     raise
 
 # Preprocess the text data
-df['lyrics_clean'] = df['lyrics'].str.lower().str.replace(r'[^\w\s]', '')
+df['lyrics_clean'] = df['Lyrics'].str.lower().str.replace(r'[^\w\s]', '')
 
 # Initialize sentiment analysis pipelines for different models
 models = {
