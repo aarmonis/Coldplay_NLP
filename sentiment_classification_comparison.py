@@ -107,8 +107,8 @@ print("Column names in the DataFrame:", df.columns.tolist())
 
 # Create a results dataframe
 results_df = pd.DataFrame({
-    'Title': df['Title'],
-    'Album': df['Album'],
+    'Track Name': df['Track Name'],
+    'Album Name': df['Album Name'],
     'Year': df['Year']
 })
 
@@ -128,13 +128,13 @@ results_df = results_df.sort_values('Average_sentiment', ascending=False)
 
 # Display the top 10 most positive and most negative songs
 print("\nTop 10 Most Positive Songs:")
-print(results_df.head(10)[['Title', 'Album', 'Year', 'Average_sentiment']])
+print(results_df.head(10)[['Track Name', 'Album Name', 'Year', 'Average_sentiment']])
 
 print("\nTop 10 Most Negative Songs:")
-print(results_df.tail(10)[['Title', 'Album', 'Year', 'Average_sentiment']])
+print(results_df.tail(10)[['Track Name', 'Album Name', 'Year', 'Average_sentiment']])
 
 # Calculate average sentiment by album
-album_sentiment = results_df.groupby('Album')['Average_sentiment'].mean().sort_values(ascending=False)
+album_sentiment = results_df.groupby('Album Name')['Average_sentiment'].mean().sort_values(ascending=False)
 print("\nAverage Sentiment by Album:")
 print(album_sentiment)
 
