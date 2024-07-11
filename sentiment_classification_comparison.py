@@ -27,15 +27,23 @@ device = 0 if torch.cuda.is_available() else -1
 logging.info(f"Using device: {'GPU' if device == 0 else 'CPU'}")
 
 # Initialize sentiment analysis pipelines for different models
-models = {
-    'siebert/sentiment-roberta-large-english': pipeline('sentiment-analysis', model='siebert/sentiment-roberta-large-english', device=device),
-    'cardiffnlp/twitter-roberta-base-sentiment': pipeline('sentiment-analysis', model='cardiffnlp/twitter-roberta-base-sentiment', device=device),
-    'electra-base-discriminator-finetuned-imdb': pipeline('sentiment-analysis', model='jialicheng/electra-base-imdb', device=device),
-    'textattack/albert-base-v2-SST-2': pipeline('sentiment-analysis', model='textattack/albert-base-v2-SST-2', device=device),
-    'xlnet-base-cased-sentiment': pipeline('sentiment-analysis', model='dipawidia/xlnet-base-cased-product-review-sentiment-analysis', device=device),
-    'nlptown/bert-base-multilingual-uncased-sentiment': pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment', device=device),
-    'distilbert-base-uncased-finetuned-sst-2-english': pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english', device=device)
-}
+models = {}
+model_configs = [
+    ('siebert/sentiment-roberta-large-english', 'sentiment-analysis'),
+    ('cardiffnlp/twitter-roberta-base-sentiment', 'sentiment-analysis'),
+    ('jialicheng/electra-base-imdb', 'sentiment-analysis'),
+    ('textattack/albert-base-v2-SST-2', 'sentiment-analysis'),
+    ('dipawidia/xlnet-base-cased-product-review-sentiment-analysis', 'sentiment-analysis'),
+    ('nlptown/bert-base-multilingual-uncased-sentiment', 'sentiment-analysis'),
+    ('distilbert-base-uncased-finetuned-sst-2-english', 'sentiment-analysis')
+]
+
+for model_name, task in model_configs:
+    try:
+        models[model_name] = pipeline(task, model=model_name, device=device)
+    except torch.cuda.OutOfMemoryError:
+        logging.warning(f"GPU out of memory for {model_name}. Falling back to CPU.")
+        models[model_name] = pipeline(task, model=model_name, device=-1)
 
 # Initialize VADER sentiment analyzer
 vader = SentimentIntensityAnalyzer()
