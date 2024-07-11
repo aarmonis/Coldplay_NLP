@@ -102,9 +102,12 @@ logging.info(f"Average VADER sentiment: {vader_avg:.4f}")
 # Step 5: Results Processing
 logging.info("Step 5: Results Processing")
 
+# Print column names
+print("Column names in the DataFrame:", df.columns.tolist())
+
 # Create a results dataframe
 results_df = pd.DataFrame({
-    'Song': df['Song'],
+    'Title': df['Title'],
     'Album': df['Album'],
     'Year': df['Year']
 })
@@ -125,10 +128,10 @@ results_df = results_df.sort_values('Average_sentiment', ascending=False)
 
 # Display the top 10 most positive and most negative songs
 print("\nTop 10 Most Positive Songs:")
-print(results_df.head(10)[['Song', 'Album', 'Year', 'Average_sentiment']])
+print(results_df.head(10)[['Title', 'Album', 'Year', 'Average_sentiment']])
 
 print("\nTop 10 Most Negative Songs:")
-print(results_df.tail(10)[['Song', 'Album', 'Year', 'Average_sentiment']])
+print(results_df.tail(10)[['Title', 'Album', 'Year', 'Average_sentiment']])
 
 # Calculate average sentiment by album
 album_sentiment = results_df.groupby('Album')['Average_sentiment'].mean().sort_values(ascending=False)
