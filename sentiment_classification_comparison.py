@@ -11,7 +11,8 @@ import torch
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Load the dataset
+# Step 1: Data Loading and Preprocessing
+logging.info("Step 1: Data Loading and Preprocessing")
 try:
     df = pd.read_excel('Coldplay Research Project_Data.xlsx')
     logging.info(f"Dataset loaded successfully. Shape: {df.shape}")
@@ -22,6 +23,8 @@ except Exception as e:
 # Preprocess the text data
 df['lyrics_clean'] = df['Lyrics'].str.lower().str.replace(r'[^\w\s]', '')
 
+# Step 2: Model Initialization
+logging.info("Step 2: Model Initialization")
 # Check if GPU is available
 device = 0 if torch.cuda.is_available() else -1
 logging.info(f"Using device: {'GPU' if device == 0 else 'CPU'}")
@@ -48,6 +51,8 @@ for model_name, task in model_configs:
 # Initialize VADER sentiment analyzer
 vader = SentimentIntensityAnalyzer()
 
+# Step 3: Sentiment Analysis
+logging.info("Step 3: Sentiment Analysis")
 # Function to get VADER sentiment
 def get_vader_sentiment(text):
     return vader.polarity_scores(text)['compound']
@@ -61,6 +66,8 @@ def get_transformer_sentiment(model_pipeline, text):
         logging.error(f"Error in sentiment analysis: {e}")
         return "ERROR", 0.0
 
+# Step 4: Normalization of Scores
+logging.info("Step 4: Normalization of Scores")
 # Function to calculate average sentiment score
 def calculate_average_sentiment(df, model_name):
     return df[f'{model_name}_normalized_score'].mean()
@@ -88,6 +95,8 @@ df['vader_sentiment'] = df['lyrics_clean'].apply(get_vader_sentiment)
 vader_avg = df['vader_sentiment'].mean()
 logging.info(f"Average VADER sentiment: {vader_avg:.4f}")
 
+# Step 5: Visualization and Analysis
+logging.info("Step 5: Visualization and Analysis")
 # Analyze and compare the results
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 14))
 
@@ -133,7 +142,7 @@ for model, stats in descriptive_stats.items():
     print(f"Median: {stats['median']:.4f}")
     print(f"Standard Deviation: {stats['std']:.4f}")
 
-# Visualizations
+# Additional Visualizations
 plt.figure(figsize=(20, 15))
 
 # Histograms
@@ -167,6 +176,8 @@ plt.legend(loc='upper right')
 
 plt.tight_layout()
 plt.show()
+
+logging.info("Sentiment classification process completed.")
 import pandas as pd
 from transformers import pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
