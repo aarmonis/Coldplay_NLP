@@ -65,3 +65,33 @@ https://arxiv.org/pdf/1703.00607v2 useful paper?
 14. Test 10 models and create classification metrics.
 15. Determine thresholds.
 16. Set up evaluation metrics.
+
+##
+### Descriptive Statistics
+
+- Calculate and compare:
+  - Mean confidence score, pdf positive
+  - Median
+  - Standard deviation for sentiment scores from each model.
+
+### Visualization positive pdf
+
+- Histograms: Frequency distribution of sentiment scores.
+- Box Plots: Quartiles comparison and outlier detection.
+- Density Plots: Estimate and visualize the probability density function.
+
+### Visualize transformer_labels
+### Visualize transformer_confidence
+
+### Statistical Tests
+
+- Kolmogorov-Smirnov test to compare distributions.
+
+
+# Next Steps
+
+Sentiment was a good rabbit hole BUT, 
+
+1. LDA to identify ESG topics
+2. ABSA for these topics to see how it evolves in discography. 
+3. Keep album sentiment as a baseline and draw connections with vailance. 

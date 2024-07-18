@@ -1,7 +1,17 @@
-# Workflow:
+# Model Comparison
+## Descriptive Statistics
 
-Tools to look up:
+- Calculate and compare:
+  - Mean
+  - Median
+  - Standard deviation for sentiment scores from each model.
 
-- Vader
-- Word2vec
-- BERT
+## Visualization
+
+- Histograms: Frequency distribution of sentiment scores.
+- Box Plots: Quartiles comparison and outlier detection.
+- Density Plots: Estimate and visualize the probability density function.
+
+## Statistical Tests
+
+- Kolmogorov-Smirnov test to compare distributions.
