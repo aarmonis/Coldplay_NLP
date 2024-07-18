@@ -1,17 +1,22 @@
-# Model Comparison
-## Descriptive Statistics
+### Descriptive Statistics
 
 - Calculate and compare:
-  - Mean
+  - Mean confidence score, pdf positive
   - Median
   - Standard deviation for sentiment scores from each model.
 
-## Visualization
+### Visualization positive pdf
 
 - Histograms: Frequency distribution of sentiment scores.
 - Box Plots: Quartiles comparison and outlier detection.
 - Density Plots: Estimate and visualize the probability density function.
 
-## Statistical Tests
+### Visualize transformer_labels
 
-- Kolmogorov-Smirnov test to compare distributions.
+# Next Steps
+
+Sentiment was a good rabbit hole BUT 
+
+1. LDA to identify ESG topics
+2. ABSA for these topics to see how it evolves in discography. 
+3. Keep album sentiment as a baseline and draw connections with vailance. 
