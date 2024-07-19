@@ -15,8 +15,15 @@
 
 # Next Steps
 
-Sentiment was a good rabbit hole BUT 
+Sentiment is great BUT 
 
 1. LDA to identify ESG topics
 2. ABSA for these topics to see how it evolves in discography. 
 3. Keep album sentiment as a baseline and draw connections with vailance. 
+
+# Media Review untill September:
+
+Lyrics...
+
+Recomendation system: Produce discs out of user inputs. 
+Post fanpages of coldplay.
