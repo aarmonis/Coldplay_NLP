@@ -1,97 +1,65 @@
+# ESG Theme Evolution in Coldplay Lyrics
 
-# Step 1: Data Preparation
-1. Load the data: Ensure the data is correctly loaded into a DataFrame.
-2. Clean the data: Handle any missing values or duplicates. Clean the lyrics text if necessary (e.g., removing special characters).
+## Overview
+This project by Athens Analytics (ACG) explores the evolution of Environmental, Social, and Governance (ESG) themes in the lyrics of Coldplay. The analysis includes text mining, sentiment analysis, and audio feature extraction to understand how ESG themes have emerged and evolved in the band's music over time.
 
-# Step 2: Text Preprocessing with nltk
-1. Tokenization: Split the lyrics into individual words or tokens.
-2. Stop Words Removal: Remove common stop words (e.g., "the", "and", "a").
-3. Lemmatization: Reduce words to their base or root form.
+## Completed Tasks
 
-# Step 3: Exploratory Data Analysis (EDA)
-1. Basic Statistics: Calculate basic statistics such as the number of albums, tracks, and total lyrics.
-2. Word Count: Calculate the total word count for each song.
-3. Unique Word Count: Calculate the number of unique words for each song.
-4. Most Common Words: Identify the most common words in the entire dataset.
-5. Most Common Words per Album
-6. Visuals: Word Frequency Distributions and Word Clouds.
+### 1. Exploratory Data Analysis (EDA)
+- **Top n-grams Discovery:** Identified and analyzed the most frequent n-grams in Coldplay lyrics.
 
-# Step 4:Text Analysis
-1. Sentiment Analysis: Analyze the sentiment of each song's lyrics (e.g., positive, negative, neutral).
-2. N-gram Analysis: Analyze the most common bi-grams or tri-grams (pairs or triplets of words). --> PHRASES
-3. TF-IDF Analysis: Compute the Term Frequency-Inverse Document Frequency to identify important words (read tf_idf.md file)
+![n_grams](images\eda_ngrams.png)
 
-# Step 5: Advanced Analysis 
-1. Topic Modeling: Use techniques like LDA (Latent Dirichlet Allocation) to identify topics within the lyrics. --> MEANINGS
-2. Text Clustering: Cluster songs based on their lyrical content.
-3. Sentiment Over Time: Analyze how the sentiment of the lyrics changes across different albums or years.
-4. Linguistic complexitiy. Readability library.
-6. Use Spotify Database or api
-https://developer.spotify.com/documentation/web-api/reference/get-audio-features
+- **Wordcloud Visualization:** Created wordclouds to visualize common words and phrases.
+
+![Word Cloud](images\eda_wordcloud.png)
+
+### 2. Sentiment Analysis
+- **Lexicon-Based Techniques:** Used VADER dictionary to assess sentiment in the lyrics.
+![LBSA_Vader](images\LBSA.png)
+- **Pretrained Transformers:** Applied state-of-the-art models like BERT for nuanced sentiment analysis.
 
 
-# Notes 
-## 13/6/2024
+#### Model Summaries
+1. **siebert/sentiment-roberta-large-english**
+   - **Training Data**: English text data, focusing on general sentiment analysis.
 
-Need to rethink/reevaluate the text preprocessing:
-1) stop words X words_to_exclude, additional_stopwords
-2) abbreviations like i'll --> ill, you've -->youve X
-3) exclamations like woohoo? or nana? X words_to_exclude, additional_stopwords
+2. **jialicheng/electra-base-imdb**
+   - **Training Data**: IMDb movie reviews, focusing on sentiment analysis for movie reviews.
 
-## 21/6/2024
-4) What to do with ngrams? Evolution? 
-5) Should I use tokens insted of cleaned lyrics?
+3. **distilbert-base-uncased-finetuned-sst-2-english**
+   - **Training Data**: Stanford Sentiment Treebank (SST-2), focusing on binary sentiment classification.
 
-## 24/06/2024
-6) TF-IDF holds major potential in identifying most important words. 
-7) analysis per song (document)? or per album (set of documents)?
-8) Visualize the importance of some words using time graphs (tf_idf score vs song_id).
+4. **dipawidia/xlnet-base-cased-product-review-sentiment-analysis**
+   - **Training Data**: Product reviews, focusing on sentiment analysis for product reviews.
 
-## 28/06/2024
+5. **textattack/albert-base-v2-SST-2**
+   - **Training Data**: Stanford Sentiment Treebank (SST-2), focusing on binary sentiment classification.
 
-9. Text Classification vs Sentiment Analysis are different approaches.
-10. Design different preprocessing and normalization for each.
-11. Figure out normalization methods and what to look for in each case.
-12. Can I use text analysis to figure out important words and then use aspect SA?
+6. **cardiffnlp/twitter-roberta-base-sentiment**
+   - **Training Data**: Twitter data, focusing on sentiment analysis specific to tweets.
 
-https://arxiv.org/pdf/1703.00607v2 useful paper?
+7. **nlptown/bert-base-multilingual-uncased-sentiment**
+   - **Training Data**: Multilingual text data, focusing on sentiment analysis across multiple languages.
 
-## 29/06/2024
+![Transformer Confidence in SA](images\SA_transformer_confidence.png)
 
-13. Performed LBSA and SA using pre-trained distilBERT. Notebook analysis on sentiment.ipynb
+#### Sentiment Distribution for pre-trained transformers:
 
-## 07/05/2024 toDo:
+![Transformer_SA_Distribution](images\transformer_sentiment_distr.png)
 
-14. Test 10 models and create classification metrics.
-15. Determine thresholds.
-16. Set up evaluation metrics.
+### 3. Audio Feature Extraction
+- **Spotify API Integration:** Retrieved and incorporated new audio features from Spotify's API to enrich the analysis.
 
-##
-### Descriptive Statistics
+![spotify_features_distribution](images\spotify_audio_features_distributions.png)
 
-- Calculate and compare:
-  - Mean confidence score, pdf positive
-  - Median
-  - Standard deviation for sentiment scores from each model.
-
-### Visualization positive pdf
-
-- Histograms: Frequency distribution of sentiment scores.
-- Box Plots: Quartiles comparison and outlier detection.
-- Density Plots: Estimate and visualize the probability density function.
-
-### Visualize transformer_labels
-### Visualize transformer_confidence
-
-### Statistical Tests
-
-- Kolmogorov-Smirnov test to compare distributions.
+![spotify_features_corrheatmap](images\spotify_audio_features_correlations.png)
 
 
-# Next Steps
+## Next Steps
 
-Sentiment was a good rabbit hole BUT, 
+### 1. LDA Analysis
+- **Topic Modeling:** Conduct Latent Dirichlet Allocation (LDA) to uncover hidden topics related to ESG themes in the lyrics.
 
-1. LDA to identify ESG topics
-2. ABSA for these topics to see how it evolves in discography. 
-3. Keep album sentiment as a baseline and draw connections with vailance. 
+### 2. Wordcloud R - Shiny App
+- **Interactive Visualization:** Develop an interactive Shiny app in R to allow users to explore wordclouds and other visualizations dynamically.
