@@ -8,15 +8,15 @@ This project by Athens Analytics (ACG) explores the evolution of Environmental, 
 ### 1. Exploratory Data Analysis (EDA)
 - **Top n-grams Discovery:** Identified and analyzed the most frequent n-grams in Coldplay lyrics.
 
-![n_grams](images\eda_ngrams.png)
+![n_grams](images/eda_ngrams.png)
 
 - **Wordcloud Visualization:** Created wordclouds to visualize common words and phrases.
 
-![Word Cloud](images\eda_wordcloud.png)
+![Word Cloud](images/eda_wordcloud.png)
 
 ### 2. Sentiment Analysis
 - **Lexicon-Based Techniques:** Used VADER dictionary to assess sentiment in the lyrics.
-![LBSA_Vader](images\LBSA.png)
+![LBSA_Vader](images/LBSA.png)
 - **Pretrained Transformers:** Applied state-of-the-art models like BERT for nuanced sentiment analysis.
 
 
@@ -42,18 +42,18 @@ This project by Athens Analytics (ACG) explores the evolution of Environmental, 
 7. **nlptown/bert-base-multilingual-uncased-sentiment**
    - **Training Data**: Multilingual text data, focusing on sentiment analysis across multiple languages.
 
-![Transformer Confidence in SA](images\SA_transformer_confidence.png)
+![Transformer Confidence in SA](images/SA_transformer_confidence.png)
 
 #### Sentiment Distribution for pre-trained transformers:
 
-![Transformer_SA_Distribution](images\transformer_sentiment_distr.png)
+![Transformer_SA_Distribution](images/transformer_sentiment_distr.png)
 
 ### 3. Audio Feature Extraction
 - **Spotify API Integration:** Retrieved and incorporated new audio features from Spotify's API to enrich the analysis.
 
-![spotify_features_distribution](images\spotify_audio_features_distributions.png)
+![spotify_features_distribution](images/spotify_audio_features_distributions.png)
 
-![spotify_features_corrheatmap](images\spotify_audio_features_correlations.png)
+![spotify_features_corrheatmap](images/spotify_audio_features_correlations.png)
 
 
 ## Next Steps
