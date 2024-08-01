@@ -63,3 +63,5 @@ This project by Athens Analytics (ACG) explores the evolution of Environmental, 
 
 ### 2. Wordcloud R - Shiny App
 - **Interactive Visualization:** Develop an interactive Shiny app in R to allow users to explore wordclouds and other visualizations dynamically.
+
+- example [shiny-gallery](https://gallery.shinyapps.io/082-word-cloud/)
